@@ -36,23 +36,14 @@ public class UserController {
 	}
 	
 	
-	//login section
-	/*	@PostMapping("/login")
+	//logout section
+		@PostMapping("/logout")
 		
-		public void connect(String email, String motdepasse) {
-			var user= repo.findById(email);
-			if(user.isPresent()) {
-				Users usr = user.get();
-				
-				if(usr.getMotdepasse() == motdepasse) {
-					return;
-				}
+			public RedirectView logout(HttpSession session) {
+				session.invalidate();
+				return new RedirectView("/store/home"); 
 			}
-			else {
-				//
-			}
-		}
-		*/
+		
 		
 		@PostMapping("/login")
 		public ModelAndView login(

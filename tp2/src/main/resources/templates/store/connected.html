@@ -2,16 +2,21 @@
 	<body>
 		<h1> User Log In</h1>
 		
-			
-		<h1> User creation</h1>
+		<hr>
+		
+		
+		<h1> Ajout dune commande </h1>
 		<form action="/store/create" method="post">
 		
-		<tr> Nom : <input name="nom" /> </tr>
-		<tr>Prenom : <input name="prenom" /></tr>
-		<tr>Email : <input name="email" /></tr>
-		<tr>Mot de passe : <input name="motdepasse" /></tr>
+		<tr> Titre de la commande : <input name="commande" /> </tr>
 		<input type="submit" />
 		</form>
+		
+		<h1>Deconnexion</h1>
+		<form action= "/store/logout" method= "post">
+		    <button type= "submit">Log Out </button> 
+		</form>
+		
 		
 		
 		
