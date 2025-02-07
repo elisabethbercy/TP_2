@@ -3,11 +3,13 @@ package com.example.tp2.commandes;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 
 @Entity
+
 public class Users {
 	
-	private long user_id;
+	
 	public Users() {
 		
 	}
@@ -23,13 +25,8 @@ public class Users {
 	
 	
 	@Id
-	@GeneratedValue
-	public long getUser_id() {
-		return user_id;
-	}
-	public void setUser_id(long user_id) {
-		this.user_id = user_id;
-	}
+	private String email;
+	
 	public String getNom() {
 		return nom;
 	}
@@ -57,5 +54,5 @@ public class Users {
 	private String nom;
 	private String prenom;
 	private String motdepasse;
-	private String email;
+	
 }

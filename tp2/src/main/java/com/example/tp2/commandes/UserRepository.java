@@ -4,10 +4,12 @@ import java.util.Optional;
 
 import org.springframework.data.repository.CrudRepository;
 
-public interface UserRepository extends CrudRepository<Users, Long>{
+public interface UserRepository extends CrudRepository<Users, String>{
 		
-		Optional<Users>findByEmail(String email);
+		Optional<Users>findById(String email);
+		
 		Optional<Users>findByMotdepasse(String motdepasse);
+
 	
 		
 	}

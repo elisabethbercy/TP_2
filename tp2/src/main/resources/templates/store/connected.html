@@ -1,18 +1,8 @@
 <html xmlns:th="https://www.thymeleaf.org">
 	<body>
 		<h1> User Log In</h1>
-		<p th:if="${error}"><span th:text="${error}"></span><p/>
-        <p th:if="${success}"><span th:text="${success}"></span><p/>
 		
-		<form action="/store/login" method="post">
-		<tr> Email : <input name="email" /> </tr>
-		<tr> Mot de passe : <input name="motdepasse" /> </tr>
-		<input type="submit" />
-		</form>
-		<hr></hr>
-		
-		
-		
+			
 		<h1> User creation</h1>
 		<form action="/store/create" method="post">
 		
