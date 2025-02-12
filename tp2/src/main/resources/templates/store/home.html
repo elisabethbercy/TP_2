@@ -15,6 +15,7 @@
 		
 		<h1> User creation</h1>
 		<form action="/store/create" method="post">
+		<p th:if="${creation_ok}"><span th:text="${error}"></span><p/>
 		
 		<tr> Nom : <input name="nom" /> </tr>
 		<tr>Prenom : <input name="prenom" /></tr>

@@ -1,7 +1,4 @@
 package com.example.tp2.commandes;
-
-import java.util.Map;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -31,6 +28,7 @@ public class UserController {
 	if(service.existById(email)) {
 		redirectAttributes.addFlashAttribute("error message","Ce compte existe deja!");
 		}
+		redirectAttributes.addFlashAttribute("creation_ok","Compte creer avec succes");
 		service.create(nom, prenom, email,motdepasse);
 		return new RedirectView("/store/home");
 	}
@@ -55,14 +53,22 @@ public class UserController {
 			var usr = service.findById(email);
 			
 			if(usr.isPresent() && usr.get().getMotdepasse().equals(motdepasse)) {
-				session.setAttribute(email,session);
+				//session.setAttribute(email, session);
+				session.setAttribute(email,usr.get().getEmail());
 				model.addAttribute("success","Connection reussie");
-					
+
+				//rgetting user_name
+				System.out.println(usr.get().getPrenom());	
+				var usr_connected = usr.get().getPrenom();
+				// sending usr_name t view
+				model.addAttribute("connected_usr", usr_connected);
+
 				return new ModelAndView("/store/connected");
 			}
 			else {
 				model.addAttribute("error","Email ou mot de passe Incorrect");
 				return new ModelAndView("/store/home");
+			
 			}
 		
 		}
