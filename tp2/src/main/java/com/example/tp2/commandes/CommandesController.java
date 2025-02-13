@@ -41,7 +41,7 @@ public class CommandesController {
     public String listCommandes(Model model) {
         List<Commandes> commandes = com_service.getAllCommandes(); // Fetch commandes
         model.addAttribute("commandes", commandes); // Send list to Thymeleaf
-        return "commandes"; // Show commandes.html
+        return "commandes"; 
     }
 
 }
