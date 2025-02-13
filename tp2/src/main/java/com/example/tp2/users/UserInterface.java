@@ -1,11 +1,10 @@
-package com.example.tp2.commandes;
+package com.example.tp2.users;
 
 import java.util.Optional;
 
-import org.springframework.stereotype.Service;
 
 
-public interface UserItf {
+public interface UserInterface {
 	
 	void create(String nom, String prenom,String email,  String modepasse);
 	public Optional<Users>findById(String email);

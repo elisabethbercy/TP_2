@@ -1,4 +1,4 @@
-package com.example.tp2.commandes;
+package com.example.tp2.users;
 
 import java.util.Optional;
 
@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 
 
 @Service
-public class UserImpl implements UserItf {
+public class UserService implements UserInterface {
 	@Autowired
 	private UserRepository repo;
 	

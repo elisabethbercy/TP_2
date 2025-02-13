@@ -1,4 +1,4 @@
-package com.example.tp2.commandes;
+package com.example.tp2.users;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,7 +16,7 @@ import jakarta.servlet.http.HttpSession;
 
 public class UserController {
 	@Autowired
-	private UserItf service;
+	private UserInterface service;
 	
 	@PostMapping("/create")
 	public RedirectView create(		
@@ -35,41 +35,41 @@ public class UserController {
 	
 	
 	//logout section
-		@PostMapping("/logout")
-		
-			public RedirectView logout(HttpSession session) {
-				session.invalidate();
-				return new RedirectView("/store/home"); 
-			}
-		
-		
-		@PostMapping("/login")
-		public ModelAndView login(
-			@RequestParam String email,
-			@RequestParam String motdepasse,
-			Model model,
-			HttpSession session) {
-				
-			var usr = service.findById(email);
+	@PostMapping("/logout")
+	
+		public RedirectView logout(HttpSession session) {
+			session.invalidate();
+			return new RedirectView("/store/home"); 
+		}
+	
+	
+	@PostMapping("/login")
+	public ModelAndView login(
+		@RequestParam String email,
+		@RequestParam String motdepasse,
+		Model model,
+		HttpSession session) {
 			
-			if(usr.isPresent() && usr.get().getMotdepasse().equals(motdepasse)) {
-				//session.setAttribute(email, session);
-				session.setAttribute(email,usr.get().getEmail());
-				model.addAttribute("success","Connection reussie");
+		var usr = service.findById(email);
+		
+		if(usr.isPresent() && usr.get().getMotdepasse().equals(motdepasse)) {
+			//session.setAttribute(email, session);
+			session.setAttribute(email,usr.get().getEmail());
+			model.addAttribute("success","Connection reussie");
 
-				//rgetting user_name
-				System.out.println(usr.get().getPrenom());	
-				var usr_connected = usr.get().getPrenom();
-				// sending usr_name t view
-				model.addAttribute("connected_usr", usr_connected);
+			//rgetting user_name
+			System.out.println(usr.get().getPrenom());	
+			var usr_connected = usr.get().getPrenom();
+			// sending usr_name t view
+			model.addAttribute("connected_usr", usr_connected);
 
-				return new ModelAndView("/store/connected");
-			}
-			else {
-				model.addAttribute("error","Email ou mot de passe Incorrect");
-				return new ModelAndView("/store/home");
-			
-			}
+			return new ModelAndView("/store/connected");
+		}
+		else {
+			model.addAttribute("error","Email ou mot de passe Incorrect");
+			return new ModelAndView("/store/home");
+		
+		}
 		
 		}
 		

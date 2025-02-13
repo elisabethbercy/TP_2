@@ -1,9 +1,12 @@
-package com.example.tp2.commandes;
+package com.example.tp2.users;
+
+import java.util.List;
+
+import com.example.tp2.commandes.Commandes;
 
 import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+
 
 @Entity
 
@@ -26,6 +29,11 @@ public class Users {
 	
 	@Id
 	private String email;
+	private String nom;
+	private String prenom;
+	private String motdepasse;
+
+	private List<Commandes> commandes;
 	
 	public String getNom() {
 		return nom;
@@ -51,8 +59,15 @@ public class Users {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	private String nom;
-	private String prenom;
-	private String motdepasse;
+
+
+
+	public List<Commandes> getCommandes() {
+		return commandes;
+	}
+
+	public void setCommandes(List<Commandes> commandes) {
+		this.commandes = commandes;
+	}
 	
 }

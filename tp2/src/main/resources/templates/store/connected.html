@@ -4,14 +4,24 @@
 		
 		<hr>
 		
+		<h2>List of Commandes</h2>
+
+		<ul>
+			<li th:each="commande : ${commandes}" th:text="${commandes.nom_commande}"></li>
+		</ul>
+
+		<hr>
 		
 		<h1> Ajout dune commande </h1>
-		<form action="/store/create" method="post">
+		<form action="/store/new_commande" method="post">
 		
-		<tr> Titre de la commande : <input name="commande" /> </tr>
+		<tr> Titre de la commande : <input name="nom_commande" required/> </tr>
 		<input type="submit" />
 		</form>
-		
+
+
+
+		<hr>
 		<h1>Deconnexion</h1>
 		<form action= "/store/logout" method= "post">
 		    <button type= "submit">Log Out </button> 
