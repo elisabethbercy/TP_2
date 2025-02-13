@@ -60,8 +60,14 @@ public class UserController {
 			//rgetting user_name
 			System.out.println(usr.get().getPrenom());	
 			var usr_connected = usr.get().getPrenom();
-			// sending usr_name t view
+
+			// getting user email for commmande
+			System.out.println(usr.get().getPrenom());	
+			var usr_email_cmd = usr.get().getEmail();
+
+			// sending usr_name & usr_email to view
 			model.addAttribute("connected_usr", usr_connected);
+			model.addAttribute("usr_email_cmd", usr_email_cmd);
 
 			return new ModelAndView("/store/connected");
 		}

@@ -17,25 +17,33 @@ public class CommandesServices implements CommandesInterface{
     @Autowired
     private UserRepository u_repo;
 
-    @Override
-    public void new_commande(String nom_commande, String usr_email) {
+  
+    public void newcommande(String nom_commande, String usr_email) {
         //fetching user email from user repo
+       //var usr = service.findById(email);
+       var  usr = u_repo.findByEmail(usr_email)
+       .orElseThrow(() -> new RuntimeException("User not found with email: " + usr_email));
+       Commandes usr_com = new Commandes(nom_commande, usr );
 
-       Optional<Users> usr = u_repo.findByEmail(usr_email);
-
-        Commandes usr_com = new Commandes(nom_commande, usr );
-
+      // String email_for_cmd = usr.get().getEmail().toString();
+       //usr.get().getEmail()
+      
         c_repo.save(usr_com);
 
 
-
-        throw new UnsupportedOperationException("Unimplemented method 'new_commande'");
+       
     }
 
     @Override
-    public Optional<Users> findByUsr_email(String usr_email) {
+    public Iterable<Commandes> findAll() {
         // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'findByUsr_email'");
+        throw new UnsupportedOperationException("Unimplemented method 'findAll'");
+    }
+
+    @Override
+    public Optional<Users> findByUsrEmail(String usr_email) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'findByUsrEmail'");
     }
 
 }

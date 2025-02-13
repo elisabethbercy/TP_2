@@ -13,9 +13,11 @@
 		<hr>
 		
 		<h1> Ajout dune commande </h1>
-		<form action="/store/new_commande" method="post">
+		<form action="/commandes/newcommande" method="post">
 		
 		<tr> Titre de la commande : <input name="nom_commande" required/> </tr>
+		<input type="hidden" name="usr_email_cmd" th:value="${usr_email_cmd}" />
+
 		<input type="submit" />
 		</form>
 

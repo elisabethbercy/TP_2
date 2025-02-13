@@ -4,8 +4,10 @@ import java.util.List;
 
 import com.example.tp2.commandes.Commandes;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 
 
 @Entity
@@ -29,11 +31,13 @@ public class Users {
 	
 	@Id
 	private String email;
+
 	private String nom;
 	private String prenom;
 	private String motdepasse;
 
-	private List<Commandes> commandes;
+	@OneToMany(mappedBy = "usrEmail", cascade = CascadeType.ALL)
+	List<Commandes> commandes;
 	
 	public String getNom() {
 		return nom;

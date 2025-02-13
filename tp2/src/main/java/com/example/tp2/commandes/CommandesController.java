@@ -1,6 +1,6 @@
 package com.example.tp2.commandes;
 
-import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -24,24 +24,28 @@ public class CommandesController {
 
     @Autowired private UserController usr_cntrl;
 
-    @PostMapping("/new_commande")
-    public ModelAndView new_commande( 
+    @PostMapping("/newcommande")
+    public ModelAndView newcommande( 
         @RequestParam String nom_commande,
-        @RequestParam String usr_email,
+        @RequestParam String usr_email_cmd,
         Model model){
-        usr_cntrl.login(usr_email, null, null, null); 
+        //usr_cntrl.login(usr_email, null, null, null); 
 
-        com_service.new_commande(nom_commande, usr_email);
+        System.out.println(" ===========> User email in new commande "+ usr_email_cmd);
+        com_service.newcommande(nom_commande, usr_email_cmd);
 
         return new ModelAndView("/store/connected");
        
     }
 
     @GetMapping
-    public String listCommandes(Model model) {
-        List<Commandes> commandes = com_service.getAllCommandes(); // Fetch commandes
-        model.addAttribute("commandes", commandes); // Send list to Thymeleaf
-        return "commandes"; 
+    public ModelAndView list_Commandes() {
+       // Iterable<Commandes> commandes = com_service.findAll(); // Fetch commandes
+       // model.addAttribute("commandes", commandes); // Send list to Thymeleaf
+        var commandes = com_service.findAll();
+        var model = Map.of("commandes", commandes);
+
+        return new ModelAndView("/commandes/connected",model); 
     }
 
 }
