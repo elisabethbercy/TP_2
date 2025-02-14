@@ -9,7 +9,8 @@ import org.springframework.data.repository.query.Param;
 public interface UserRepository extends CrudRepository<Users, String>{
 		
 		Optional<Users>findById(String email);
-		Optional<Users>findByEmail(String email);
+
+		Optional<Users> findByEmail(String email);
 		
 		Optional<Users>findByMotdepasse(String motdepasse);
 		//public List<Users> findByUserEmail(@Param("userEmail") String userEmail);

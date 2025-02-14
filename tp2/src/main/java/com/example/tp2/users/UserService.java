@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class UserService implements UserInterface {
+	
 	@Autowired
 	private UserRepository repo;
 	
@@ -25,10 +26,19 @@ public class UserService implements UserInterface {
 	}
 
 
+
+
 	@Override
 	public boolean existById(String email) {
 		// TODO Auto-generated method stub
 		return false;
+	}
+
+	@Override
+	public Optional<Users> findByEmail(String email) {
+		
+		return repo.findByEmail(email);
+		
 	}
 		
 }

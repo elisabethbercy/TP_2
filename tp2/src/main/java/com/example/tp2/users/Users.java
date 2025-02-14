@@ -1,5 +1,6 @@
 package com.example.tp2.users;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.example.tp2.commandes.Commandes;
@@ -36,9 +37,17 @@ public class Users {
 	private String prenom;
 	private String motdepasse;
 
-	@OneToMany(mappedBy = "usrEmail", cascade = CascadeType.ALL)
-	List<Commandes> commandes;
+	@OneToMany(mappedBy = "users", cascade = CascadeType.PERSIST)
+	private List<Commandes> commandes = new ArrayList<>();
 	
+	public List<Commandes> getCommandes() {
+		return commandes;
+	}
+
+	public void setCommandes(List<Commandes> commandes) {
+		this.commandes = commandes;
+	}
+
 	public String getNom() {
 		return nom;
 	}
@@ -64,14 +73,8 @@ public class Users {
 		this.email = email;
 	}
 
-
-
-	public List<Commandes> getCommandes() {
-		return commandes;
-	}
-
-	public void setCommandes(List<Commandes> commandes) {
-		this.commandes = commandes;
-	}
-	
+	public void addCommande(Commandes commande) {
+        commandes.add(commande);
+        commande.setUsers(this); //  bidirectional 
+    }
 }

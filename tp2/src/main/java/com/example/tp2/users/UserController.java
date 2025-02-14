@@ -1,11 +1,16 @@
 package com.example.tp2.users;
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.SessionAttribute;
+import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.view.RedirectView;
@@ -13,10 +18,14 @@ import org.springframework.web.servlet.view.RedirectView;
 import jakarta.servlet.http.HttpSession;
 @Controller
 @RequestMapping("/store")
-
+@SessionAttributes("logged_usr_mail")
 public class UserController {
 	@Autowired
 	private UserInterface service;
+
+	
+	// @Autowired
+	// private HttpSession session;
 	
 	@PostMapping("/create")
 	public RedirectView create(		
@@ -29,6 +38,8 @@ public class UserController {
 		redirectAttributes.addFlashAttribute("error message","Ce compte existe deja!");
 		}
 		redirectAttributes.addFlashAttribute("creation_ok","Compte creer avec succes");
+		System.out.println("----------------------------------------------------------------");
+		System.out.println("==========> new user created" + email);
 		service.create(nom, prenom, email,motdepasse);
 		return new RedirectView("/store/home");
 	}
@@ -50,30 +61,24 @@ public class UserController {
 		Model model,
 		HttpSession session) {
 			
-		var usr = service.findById(email);
-		
+		Optional<Users> usr = service.findByEmail(email);
+
 		if(usr.isPresent() && usr.get().getMotdepasse().equals(motdepasse)) {
-			//session.setAttribute(email, session);
-			session.setAttribute(email,usr.get().getEmail());
+			
+			session.setAttribute("user_email", usr.get().getEmail());
+			session.setAttribute("user_prenom", usr.get().getPrenom());
+
 			model.addAttribute("success","Connection reussie");
 
-			//rgetting user_name
-			System.out.println(usr.get().getPrenom());	
-			var usr_connected = usr.get().getPrenom();
+			//printing user_name
+			System.out.println("----------------------------------------------------------------");
+			System.out.println("========> email logged in "+usr.get().getEmail());	
 
-			// getting user email for commmande
-			System.out.println(usr.get().getPrenom());	
-			var usr_email_cmd = usr.get().getEmail();
-
-			// sending usr_name & usr_email to view
-			model.addAttribute("connected_usr", usr_connected);
-			model.addAttribute("usr_email_cmd", usr_email_cmd);
-
-			return new ModelAndView("/store/connected");
+			return new ModelAndView("store/connected");
 		}
 		else {
 			model.addAttribute("error","Email ou mot de passe Incorrect");
-			return new ModelAndView("/store/home");
+			return new ModelAndView("store/home");
 		
 		}
 		

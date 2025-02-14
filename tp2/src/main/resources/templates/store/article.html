@@ -1,0 +1,32 @@
+<html xmlns:th="https://www.thymeleaf.org">
+<body>
+
+  
+    <h1 th:if="${session.commandeid != null}">
+        Article pour commande <span th:text="${session.commandeid}"></span>
+    </h1>
+
+    <h1>Ajouter un article</h1>
+
+    <form action="/commandes/addArticle" method="post">
+        <label for="article">Article:</label>
+        <input type="text" id="article" name="article" required />
+        
+        <label for="qte">Quantité:</label>
+        <input type="number" id="qte" name="qte" required />
+
+        <label for="prix">Prix:</label>
+        <input type="number" id="prix" name="prix" step="0.01" required />
+
+        <button type="submit">Ajouter</button>
+    </form>
+
+    <h1>Deconnexion</h1>
+		<form action= "/store/logout" method= "post">
+		    <button type= "submit">Log Out </button> 
+		</form>
+
+
+
+</body>
+</html>

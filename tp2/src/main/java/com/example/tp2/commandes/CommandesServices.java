@@ -1,5 +1,6 @@
 package com.example.tp2.commandes;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,37 +14,40 @@ public class CommandesServices implements CommandesInterface{
 
     @Autowired
     private CommandesRepository c_repo;
-
     @Autowired
     private UserRepository u_repo;
 
-  
-    public void newcommande(String nom_commande, String usr_email) {
-        //fetching user email from user repo
-       //var usr = service.findById(email);
-       var  usr = u_repo.findByEmail(usr_email)
-       .orElseThrow(() -> new RuntimeException("User not found with email: " + usr_email));
-       Commandes usr_com = new Commandes(nom_commande, usr );
-
-      // String email_for_cmd = usr.get().getEmail().toString();
-       //usr.get().getEmail()
-      
-        c_repo.save(usr_com);
-
-
-       
-    }
-
     @Override
     public Iterable<Commandes> findAll() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'findAll'");
+        var list = c_repo.findAll();
+
+        return list;
+        // . throw new UnsupportedOperationException("Unimplemented method 'findAll'");
+    }
+
+
+    @Override
+    public void newcommande(String nom_commande, Users user) {
+        Commandes user_com = new Commandes(nom_commande, user);
+
+        //add commande to Users List<Commandes>
+        user.addCommande(user_com);
+        // saving commande
+        c_repo.save(user_com);
+        //save/update user Users List<Commandes>
+        u_repo.save(user);
     }
 
     @Override
-    public Optional<Users> findByUsrEmail(String usr_email) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'findByUsrEmail'");
+    public List<Commandes> findByUsrEmail(String email) {
+        return c_repo.findByUsrEmail(email);
     }
+
+
+    @Override
+    public Optional<Commandes> findById(Long id) {
+        return c_repo.findById(id);
+    }
+
 
 }

@@ -1,5 +1,7 @@
 package com.example.tp2.commandes;
 import com.example.tp2.users.Users;
+
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
@@ -14,22 +16,32 @@ public class Commandes {
     private Long id;
 
     private String nom_commande;
+    private String userEmail;
 
     // joining users email column to Commandes usrEmail column
     @ManyToOne
-    @JoinColumn(name = "usrEmail", referencedColumnName = "email",nullable = true)
-    private Users usrEmail;
+    @JoinColumn(name = "usrEmail", referencedColumnName = "email", nullable = false)
+    Users users;
 
+
+    public Users getUsers() {
+        return users;
+    }
+
+    public void setUsers(Users users) {
+        this.users = users;
+    }
 
     public Commandes(){
 
     }
 
-    public Commandes(String nom_commande, Users usrEmail) {
+    public Commandes(String nom_commande, Users users) {
         this.nom_commande = nom_commande;
-        this.usrEmail = usrEmail;
+        this.users =  users;
     }
 
+   
     public Long getId() {
         return id;
     }
@@ -46,13 +58,6 @@ public class Commandes {
         this.nom_commande = nom_commande;
     }
 
-    public Users getusrEmail() {
-        return usrEmail;
-    }
-
-    public void setusrEmail(Users usrEmail) {
-        this.usrEmail = usrEmail;
-    }
 
     
     

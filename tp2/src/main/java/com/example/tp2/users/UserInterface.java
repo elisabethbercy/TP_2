@@ -10,5 +10,9 @@ public interface UserInterface {
 	public Optional<Users>findById(String email);
 	boolean existById(String email);
 
+    public Optional<Users> findByEmail(String email);
+
+
+
 	
 }

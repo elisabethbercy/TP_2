@@ -1,36 +1,38 @@
-<html xmlns:th="https://www.thymeleaf.org">
+ <html xmlns:th="https://www.thymeleaf.org">
 	<body>
-		<h1> Hello <span th:text="${connected_usr}"></span> !</h1>
 		
+		<div th:if="${session.user_prenom != null}">
+			<h1> Hello <span th:text="${session.user_prenom}"></span> !</h1>
+        	</div>
 		<hr>
 		
 		<h2>List of Commandes</h2>
 
-		<ul>
-			<li th:each="commande : ${commandes}" th:text="${commandes.nom_commande}"></li>
-		</ul>
+		<table border="1">
+				<tr th:each="commande : ${commandes}">
+				<td th:text="${commande.id}"></td>
+				<td th:text="${commande.nom_commande}"></td>
+				<td><a th:href="@{/store/article(id=${commande.id})}" th:text="${commande.nom_commande}"></a></td>
+			</tr>
+	
+		</table>
 
 		<hr>
 		
 		<h1> Ajout dune commande </h1>
+
 		<form action="/commandes/newcommande" method="post">
-		
-		<tr> Titre de la commande : <input name="nom_commande" required/> </tr>
-		<input type="hidden" name="usr_email_cmd" th:value="${usr_email_cmd}" />
-
-		<input type="submit" />
+			<label for="nom_commande">Titre de la commande:</label>
+			<input name="nom_commande" required />
+			<input type="submit" value="Ajouter" />
 		</form>
-
-
-
+		
 		<hr>
+
 		<h1>Deconnexion</h1>
 		<form action= "/store/logout" method= "post">
 		    <button type= "submit">Log Out </button> 
 		</form>
-		
-		
-		
 		
 		
 			
