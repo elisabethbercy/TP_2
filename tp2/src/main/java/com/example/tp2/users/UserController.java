@@ -36,10 +36,13 @@ public class UserController {
 	RedirectAttributes redirectAttributes){
 	if(service.existById(email)) {
 		redirectAttributes.addFlashAttribute("error message","Ce compte existe deja!");
+		System.out.println("----------------------------------------------------------------");
+		System.out.println("==========> Email already exist  " + email);
+		return new RedirectView("/store/home");
 		}
 		redirectAttributes.addFlashAttribute("creation_ok","Compte creer avec succes");
 		System.out.println("----------------------------------------------------------------");
-		System.out.println("==========> new user created" + email);
+		System.out.println("==========> new user created  " + email);
 		service.create(nom, prenom, email,motdepasse);
 		return new RedirectView("/store/home");
 	}
@@ -78,7 +81,7 @@ public class UserController {
 		}
 		else {
 			model.addAttribute("error","Email ou mot de passe Incorrect");
-			return new ModelAndView("store/home");
+			return new ModelAndView("/store/home");
 		
 		}
 		

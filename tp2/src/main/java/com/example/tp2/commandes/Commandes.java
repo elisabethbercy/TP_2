@@ -16,12 +16,10 @@ public class Commandes {
     private Long id;
 
     private String nom_commande;
-    private String userEmail;
 
     // joining users email column to Commandes usrEmail column
     @ManyToOne
-    @JoinColumn(name = "usrEmail", referencedColumnName = "email", nullable = false)
-    Users users;
+    private Users users;
 
 
     public Users getUsers() {
@@ -57,11 +55,6 @@ public class Commandes {
     public void setNom_commande(String nom_commande) {
         this.nom_commande = nom_commande;
     }
-
-
-    
-    
-
     
 
 }

@@ -1,0 +1,2 @@
+-- insert into users values (101,'bercy','steph','bercy@gmail.com','1234');
+-- insert into commandes values (101,'epices salee','bercy@gmail.com');

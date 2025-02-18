@@ -7,6 +7,7 @@ import com.example.tp2.commandes.Commandes;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 
@@ -37,8 +38,8 @@ public class Users {
 	private String prenom;
 	private String motdepasse;
 
-	@OneToMany(mappedBy = "users", cascade = CascadeType.PERSIST)
-	private List<Commandes> commandes = new ArrayList<>();
+	@OneToMany(mappedBy = "users", fetch = FetchType.EAGER)
+	private List<Commandes> commandes;
 	
 	public List<Commandes> getCommandes() {
 		return commandes;
@@ -75,6 +76,5 @@ public class Users {
 
 	public void addCommande(Commandes commande) {
         commandes.add(commande);
-        commande.setUsers(this); //  bidirectional 
     }
 }

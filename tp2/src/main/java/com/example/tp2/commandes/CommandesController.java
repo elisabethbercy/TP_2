@@ -1,6 +1,5 @@
 package com.example.tp2.commandes;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.web.servlet.view.RedirectView;
 
 import com.example.tp2.users.UserService;
 import com.example.tp2.users.Users;
@@ -29,79 +29,76 @@ public class CommandesController {
     @Autowired
     private UserService usr_Service;
 
+    @Autowired
+    private CommandesRepository com_repo;
+
     @PostMapping("/newcommande")
-    public ModelAndView newcommande( 
+    public RedirectView newcommande( 
         @RequestParam String nom_commande,
         HttpSession session,
-        RedirectAttributes redirectAttributes,
-        Model model
+        RedirectAttributes redirectAttributes
         ){
-       
-        //Users user_email = (Users) session.getAttribute("user_email");
         String user_email = (String) session.getAttribute("user_email");
+        System.out.println(user_email+"  check if user_email is in session");
 
         if (user_email == null) {
             // Redirect to home if no user 
             redirectAttributes.addFlashAttribute("error", "Session Invalide. Veuillez vous reconnecter.");
-            return new ModelAndView("redirect:/store/home");
+            return new RedirectView("redirect:/store/home");
         }
 
         Users user = usr_Service.findByEmail(user_email).orElse(null); // error here
-        if (user == null) {
-            redirectAttributes.addFlashAttribute("error", "User not found.");
-            return new ModelAndView("redirect:/store/home");
-        }
+        com_service.newcommande(nom_commande, user);
 
-        // Users users = user.get();
-        List<Commandes> commandes = com_service.findByUsrEmail(user_email);
-        // commandes.setNom_commande(nom_commande);
-        // commandes.setUsers(users);
-
-        session.setAttribute("commandeid",commandes.get().getId());
-
-        com_service.newcommande(nom_commande, user_email);
-
-        System.out.println(" ===========> User email saved in new commande "+ user_email);
-
-        return new ModelAndView("store/connected");
+        System.out.println(" ===========> User email saved in new commande from Controller newcommande "+ user_email);
        
+        return new RedirectView("/store/connected");
+      
     }
 
     @GetMapping("/connected")
     public ModelAndView connected(HttpSession session) {
-        //Users user = (Users) session.getAttribute("user_data");
-        String userEmail = (String) session.getAttribute("user_email");
-        
-        if (userEmail == null) {
-            return new ModelAndView("redirect:/store/home");
+        ModelAndView modelAndView = new ModelAndView("/store/home");
+        if(session.getAttribute("user_email") !=null){
+            List<Commandes> listCommandes =  com_repo.getAllCommandes(session);
+            modelAndView.addObject("commandes", listCommandes);
+
         }
+        return modelAndView;
 
-        List<Commandes> commandes = com_service.findByUsrEmail(userEmail);
 
-
-        // //printing commandes in console
-        commandes.forEach(c -> System.out.println("Commande: " + c.getNom_commande()));
-        
-        
-        var model = Map.of("commandes", commandes, "userEmail", userEmail);
-
-        return new ModelAndView("store/connected", model);  
     }
 
-    @GetMapping("/store/article")
-    public ModelAndView viewArticle(@RequestParam Long id,
-        HttpSession session) {
-            session.getAttribute("commandeid", commandeid);
-        Optional<Commandes> commandeOpt = com_service.findById(id);
 
-        if (commandeOpt.isEmpty()) {
-            return new ModelAndView("redirect:/store/home");
-        }
+           // String emailString = (String) session.getAttribute("user_email");
 
-        Commandes commande = commandeOpt.get();
-        return new ModelAndView("store/article", Map.of("commande", commande));
-    }
+        // if (emailString == null) {
+        //     // Redirect to home if no user 
+        //     redirectAttributes.addFlashAttribute("error", "Liste non Valide ");
+        //     return new ModelAndView("redirect:/store/home");
+        // }
 
+        // Optional<Users> usersOptional = usr_Service.findByEmail(emailString);
+
+        // if (usersOptional.isEmpty()) {
+        //     return new ModelAndView("redirect:/store/home");
+        // }
+
+        // Users users = usersOptional.get();
+        
+        // System.out.println("User details: " + users.getNom() + " " + users.getPrenom());
+        
+        // List<Commandes> listCommandes = com_service.getCommandesByUsers(users);
+
+
+
+        // ModelAndView modelAndViewList = new ModelAndView("store/connected");
+        // modelAndViewList.addObject("commandes", listCommandes);
+
+        // System.out.println("Listes de Commandes: " + listCommandes); 
+
+        // return modelAndViewList;
+    
 
 
     

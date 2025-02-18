@@ -3,20 +3,28 @@
 		
 		<div th:if="${session.user_prenom != null}">
 			<h1> Hello <span th:text="${session.user_prenom}"></span> !</h1>
-        	</div>
+			
+
+        </div>
+
+		<div th:if="${session.user_prenom != null}">
+			<h1> Hello <span th:text="${session.user_email}"></span> !</h1>
+			
+
+        </div>
+		
 		<hr>
 		
 		<h2>List of Commandes</h2>
-
+		
 		<table border="1">
-				<tr th:each="commande : ${commandes}">
-				<td th:text="${commande.id}"></td>
-				<td th:text="${commande.nom_commande}"></td>
-				<td><a th:href="@{/store/article(id=${commande.id})}" th:text="${commande.nom_commande}"></a></td>
+			<tr><th>Id</th><th>Nom</th><th>Prenom</th></tr>
+			<tr th:each="commande : ${commandes}">
+				<td th:each="${commande.nom_commande}" />
+				<td th:each="${commande.users_email}" />
 			</tr>
 	
-		</table>
-
+			</table>
 		<hr>
 		
 		<h1> Ajout dune commande </h1>
