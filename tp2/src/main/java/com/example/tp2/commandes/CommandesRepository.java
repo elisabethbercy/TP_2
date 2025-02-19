@@ -9,8 +9,6 @@ import org.springframework.data.repository.query.Param;
 
 import com.example.tp2.users.Users;
 
-import jakarta.servlet.http.HttpSession;
-
 public interface CommandesRepository extends CrudRepository<Commandes, Long>{
     
     Optional<Commandes>findById(Long id);
@@ -21,6 +19,8 @@ public interface CommandesRepository extends CrudRepository<Commandes, Long>{
 
     @Query("SELECT c FROM Commandes c WHERE c.users.email = :email")
     List<Commandes> findByUserEmail(@Param("email") String email);
+
+    List<Commandes> findByNomCommande(String nomCommande);
 
 
     

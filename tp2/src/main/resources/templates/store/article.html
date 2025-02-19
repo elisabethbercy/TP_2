@@ -13,15 +13,15 @@
 
     <h1>Ajouter un article a la commande  </h1>
 
-    <form action="/commandes/addArticle" method="post">
+    <form action="/articles/newarticle" method="post">
         <label for="article">Article:</label>
-        <input type="text" id="article" name="article" required />
+        <input type="text"  name="nom_article" required />
         
         <label for="qte">Quantité:</label>
-        <input type="number" id="qte" name="qte" required />
+        <input type="number" name="qte_article" required />
 
         <label for="prix">Prix:</label>
-        <input type="number" id="prix" name="prix" step="0.01" required />
+        <input type="number" name="prix_article" step="0.01" required />
 
         <button type="submit">Ajouter</button>
     </form>

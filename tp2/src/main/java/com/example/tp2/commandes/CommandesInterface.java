@@ -5,17 +5,15 @@ import com.example.tp2.users.Users;
 
 public interface CommandesInterface {
 
-
-    Commandes newcommande(String nom_commande, Users users);
+    Commandes newCommande(String nomCommande, Users users);
 
     List<Commandes> findByUsers(Users users);
 
     List<Commandes> getCommandesByUsers(Users users);
 
+    List<Commandes> findByNomCommande(String nomCommande);
 
-    public List<Commandes>findAll();
+    List<Commandes> findAll();
+
     Commandes connected();
- 
-
-    
 }

@@ -35,11 +35,12 @@ public class CommandesController {
 
     @PostMapping("/newcommande")
     public RedirectView newcommande( 
-        @RequestParam String nom_commande,
+        @RequestParam String nomCommande,
         HttpSession session,
         RedirectAttributes redirectAttributes
         ){
         String user_email = (String) session.getAttribute("user_email");
+
         System.out.println(user_email+"  check if user_email is in session");
 
         if (user_email == null) {
@@ -48,8 +49,8 @@ public class CommandesController {
             return new RedirectView("redirect:/store/home");
         }
 
-        Users user = usr_Service.findByEmail(user_email).orElse(null); // error here
-        com_service.newcommande(nom_commande, user);
+        Users user = usr_Service.findByEmail(user_email).orElse(null); // if error here
+        com_service.newCommande(nomCommande, user);
 
         System.out.println(" ===========> User email saved in new commande from Controller newcommande "+ user_email);
         return  new RedirectView("/commandes/commandes");
@@ -81,6 +82,7 @@ public class CommandesController {
 
                 Users users = usersOptional.get();
                 List<Commandes> listAllCommandes = com_service.getCommandesByUsers(users);
+                session.setAttribute("nomCommande", listAllCommandes.get(0).getNomCommande());
 
                 modelAndView.addObject("commandes", listAllCommandes);
                 System.out.println("Listes de Commandes: " + listAllCommandes);

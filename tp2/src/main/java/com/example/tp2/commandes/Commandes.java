@@ -1,27 +1,55 @@
 package com.example.tp2.commandes;
-import com.example.tp2.users.Users;
+import java.util.ArrayList;
+import java.util.List;
 
-import jakarta.persistence.CascadeType;
+import com.example.tp2.articles.Articles;
+import com.example.tp2.users.Users;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 
 @Entity
 public class Commandes {
+
+
+    public Commandes(){
+        this.articles = new ArrayList<>();
+    }
     
     @Id
     @GeneratedValue
     private Long id;
 
-    private String nom_commande;
+    private String nomCommande;
 
     // joining users email column to Commandes table
     @ManyToOne
     @JoinColumn(name = "email")
     private Users users;
 
+    // joining nomCommande column to article table
+    @OneToMany(mappedBy = "commandes", fetch = FetchType.EAGER)
+    private List<Articles> articles;
+
+    public Commandes(String nomCommande, Users users) {
+        super();
+
+        this.nomCommande = nomCommande;
+        this.users =  users;
+        this.articles = new ArrayList<>();
+    }
+
+    public List<Articles> getArticles() {
+        return articles;
+    }
+
+    public void setArticles(List<Articles> articles) {
+        this.articles = articles;
+    }
 
     public Users getUsers() {
         return users;
@@ -31,16 +59,7 @@ public class Commandes {
         this.users = users;
     }
 
-    public Commandes(){
-
-    }
-
-    public Commandes(String nom_commande, Users users) {
-        this.nom_commande = nom_commande;
-        this.users =  users;
-    }
-
-   
+  
     public Long getId() {
         return id;
     }
@@ -49,12 +68,17 @@ public class Commandes {
         this.id = id;
     }
 
-    public String getNom_commande() {
-        return nom_commande;
+    public String getNomCommande() {
+        return nomCommande;
     }
 
-    public void setNom_commande(String nom_commande) {
-        this.nom_commande = nom_commande;
+    public void setNomCommande(String nomCommande) {
+        this.nomCommande = nomCommande;
+    }
+
+    public void addArticle(Articles article) {
+        article.setCommandes(this);
+        articles.add(article);
     }
     
 

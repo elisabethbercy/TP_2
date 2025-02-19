@@ -20,6 +20,20 @@ public class Users {
 	public Users() {
 		this.commandes = new ArrayList<>();
 	}
+
+
+	
+	@Id
+	private String email;
+
+	private String nom;
+	private String prenom;
+	private String motdepasse;
+
+	@OneToMany(mappedBy = "users", fetch = FetchType.EAGER)
+	private List<Commandes> commandes;
+
+	
 	
 	public Users(String nom, String prenom, String email, String motdepasse) {
 		super();
@@ -32,15 +46,6 @@ public class Users {
 	}
 	
 	
-	@Id
-	private String email;
-
-	private String nom;
-	private String prenom;
-	private String motdepasse;
-
-	@OneToMany(mappedBy = "users", fetch = FetchType.EAGER)
-	private List<Commandes> commandes;
 	
 	public List<Commandes> getCommandes() {
 		return commandes;

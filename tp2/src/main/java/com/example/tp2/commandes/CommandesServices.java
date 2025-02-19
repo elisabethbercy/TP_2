@@ -17,20 +17,29 @@ public class CommandesServices implements CommandesInterface{
 
 
     @Override
-    public Commandes newcommande(String nom_commande, Users users) {
+    public Commandes newCommande(String nomCommande, Users users) {
         Commandes commandes = new Commandes();
-        commandes.setNom_commande(nom_commande);
+        commandes.setNomCommande(nomCommande);
         commandes.setUsers(users);
         return c_repo.save(commandes);
         
     }
 
 
-
     public List<Commandes> getCommandesByUsers(Users users){
         return c_repo.findByUsers(users);
 
         // check this
+    }
+
+
+    @Override
+    public List<Commandes> findAll() {
+        return c_repo.findAll();
+    }
+
+    public List<Commandes> findByUsers(Users  users){
+        return c_repo.findByUserEmail(users.getEmail());
     }
 
 
@@ -43,14 +52,8 @@ public class CommandesServices implements CommandesInterface{
     }
 
 
-
     @Override
-    public List<Commandes> findAll() {
-        return c_repo.findAll();
+    public List<Commandes> findByNomCommande(String nomCommande) {
+        return c_repo.findByNomCommande(nomCommande);
     }
-
-    public List<Commandes> findByUsers(Users  users){
-        return c_repo.findByUserEmail(users.getEmail());
-    }
-
 }
