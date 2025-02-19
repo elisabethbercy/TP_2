@@ -17,8 +17,10 @@ public interface ArticlesRepository extends CrudRepository<Articles, Long> {
 
     List<Articles> findByCommandes(Commandes commandes);
     
-    @Query("SELECT a FROM Articles a WHERE a.commandes.nomCommande = :nomCommande")
+    @Query("SELECT a FROM Articles a JOIN a.commandes c WHERE c.nomCommande = :nomCommande")
     List<Articles> findByNomCommande(@Param("nomCommande")String nomCommande);
 
+    // @Query("SELECT a FROM Articles a WHERE a.commandes.nomCommande = :nomCommande")
+    // List<Articles> findByNomCommande(@Param("nomCommande")String nomCommande);
     
 }

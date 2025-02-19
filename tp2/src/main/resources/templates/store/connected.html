@@ -30,7 +30,7 @@
             <tr><th>Nom Commande</th></tr>
             <tr th:each="commande : ${commandes}">
                 <td th:text="${commande.nomCommande}"></td>
-				<td><a th:href="@{/commandes/article(id=${commande.id})}" th:text="${commande.nomCommande}"></a></td>
+				<td><a th:href="@{/commandes/articles(id=${commande.id})}" th:text="${commande.nomCommande}"></a></td>
 				<td th:text="${commande.id}" style="display: none;"></td>
             </tr>
     

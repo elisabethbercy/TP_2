@@ -14,11 +14,11 @@ public class ArticlesServices implements ArticlesInterface {
     private ArticlesRepository a_repo;
 
     @Override
-    public Articles newArticle(String nom_article, String qte_article, String prix_article, Commandes commandes) {
+    public Articles newArticle(String nomArticle, String qteArticle, String prixArticle, Commandes commandes) {
        Articles articles = new Articles();
-        articles.setNom_article(nom_article);
-        articles.setQte_article(qte_article);
-        articles.setPrix_article(prix_article);
+        articles.setNomArticle(nomArticle);
+        articles.setQteArticle(qteArticle);
+        articles.setPrixArticle(prixArticle);
         articles.setCommandes(commandes);
         return a_repo.save(articles);
     }

@@ -10,18 +10,31 @@
 
     </div>
 
+    <hr>
+
+    <table border="1">
+        <tr><th>Nom Article</th></tr>
+        <tr th:each="article : ${articles}">
+            <td th:text="${article.nomArticle}"></td>
+            <td th:text="${article.id}" style="display: none;"></td>
+        </tr>
+
+    </table> 
+
+    <hr>
 
     <h1>Ajouter un article a la commande  </h1>
 
     <form action="/articles/newarticle" method="post">
+        <!-- <input type="hidden" name="id" th:value="${commande.id}" /> -->
         <label for="article">Article:</label>
-        <input type="text"  name="nom_article" required />
+        <input type="text"  name="nomArticle" required />
         
         <label for="qte">Quantité:</label>
-        <input type="number" name="qte_article" required />
+        <input type="number" name="qteArticle" required />
 
         <label for="prix">Prix:</label>
-        <input type="number" name="prix_article" step="0.01" required />
+        <input type="number" name="prixArticle" step="0.01" required />
 
         <button type="submit">Ajouter</button>
     </form>

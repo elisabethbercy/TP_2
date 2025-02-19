@@ -67,6 +67,8 @@ public class CommandesController {
         return new ModelAndView("/store/test", model);
     }
 
+    // !!! to do : list display before newcommande added
+
     @GetMapping("/commandes")
     public ModelAndView commandes(HttpSession session){
 
@@ -76,7 +78,7 @@ public class CommandesController {
 
         if(user_email != null){
             Optional<Users> usersOptional = usr_Service.findByEmail(user_email);
-            System.out.println("===========================> email null  /commandes ");
+            System.out.println("===========================> email not null  /commandes ");
 
             if(usersOptional.isPresent()){
 
@@ -91,7 +93,8 @@ public class CommandesController {
         return modelAndView;
     }
     
-    @GetMapping("/article")
+
+    @GetMapping("/articles")
     public ModelAndView article(@RequestParam Long id) {
     Optional<Commandes> commandeOptional = com_repo.findById(id);
     if (commandeOptional.isPresent()) {

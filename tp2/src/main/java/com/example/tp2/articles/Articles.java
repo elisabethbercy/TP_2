@@ -13,62 +13,64 @@ public class Articles {
 
     @Id
     @GeneratedValue
-    private long id;
-    private String nom_article;
-    private String qte_article;
-    private String prix_article;
+    private long idArticle;
+    private String nomArticle;
+    private String qteArticle;
+    private String prixArticle;
 
     
 
-    // joining commande  nom_commande column to article table
+    // joining commande  nomCommande column to article table
     @ManyToOne
-    @JoinColumn(name = "nom_commande")
+    @JoinColumn(name = "id")
     private Commandes commandes;    
 
     public Articles(){
 
     }
 
-    public Articles(String nom_article, String qte_article, String prix_article, Commandes commandes) {
-        this.nom_article = nom_article;
-        this.qte_article = qte_article;
-        this.prix_article = prix_article;
+    public Articles(String nomArticle, String qteArticle, String prixArticle, Commandes commandes) {
+        this.nomArticle = nomArticle;
+        this.qteArticle = qteArticle;
+        this.prixArticle = prixArticle;
         this.commandes = commandes;
     }
 
 
 
     public long getId() {
-        return id;
+        return idArticle;
     }
 
-    public void setId(long id) {
-        this.id = id;
+    public void setId(long idArticle) {
+        this.idArticle = idArticle;
     }
 
-    public String getNom_article() {
-        return nom_article;
+    
+    public String getNomArticle() {
+        return nomArticle;
     }
 
-    public void setNom_article(String nom_article) {
-        this.nom_article = nom_article;
+    public void setNomArticle(String nomArticle) {
+        this.nomArticle = nomArticle;
     }
 
-    public String getQte_article() {
-        return qte_article;
+    public String getQteArticle() {
+        return qteArticle;
     }
 
-    public void setQte_article(String qte_article) {
-        this.qte_article = qte_article;
+    public void setQteArticle(String qteArticle) {
+        this.qteArticle = qteArticle;
     }
 
-    public String getPrix_article() {
-        return prix_article;
+    public String getPrixArticle() {
+        return prixArticle;
     }
 
-    public void setPrix_article(String prix_article) {
-        this.prix_article = prix_article;
+    public void setPrixArticle(String prixArticle) {
+        this.prixArticle = prixArticle;
     }
+  
 
     public Commandes getCommandes() {
         return commandes;

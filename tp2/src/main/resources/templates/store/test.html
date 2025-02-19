@@ -7,7 +7,7 @@
         <table border="1">
             <tr><th>Commande</th><th>Usr_Email</th></tr>
             <tr th:each="commande : ${commandes}">
-                <td th:text="${commande.nom_commande}"></td>
+                <td th:text="${commande.nomCommande}"></td>
                 <td th:text="${commande.users}"></td>
             </tr>
     
