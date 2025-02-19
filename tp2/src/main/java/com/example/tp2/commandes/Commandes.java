@@ -17,8 +17,9 @@ public class Commandes {
 
     private String nom_commande;
 
-    // joining users email column to Commandes usrEmail column
+    // joining users email column to Commandes table
     @ManyToOne
+    @JoinColumn(name = "email")
     private Users users;
 
 

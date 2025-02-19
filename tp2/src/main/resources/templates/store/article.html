@@ -2,11 +2,16 @@
 <body>
 
   
-    <h1 th:if="${session.commandeid != null}">
-        Article pour commande <span th:text="${session.commandeid}"></span>
-    </h1>
+    
 
-    <h1>Ajouter un article</h1>
+    <div th:if="${session.user_prenom != null}">
+        <h1> Hello <span th:text="${session.user_prenom}"></span> !</h1>
+        
+
+    </div>
+
+
+    <h1>Ajouter un article a la commande  </h1>
 
     <form action="/commandes/addArticle" method="post">
         <label for="article">Article:</label>

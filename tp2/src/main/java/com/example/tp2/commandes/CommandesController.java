@@ -1,5 +1,6 @@
 package com.example.tp2.commandes;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +16,7 @@ import org.springframework.web.servlet.view.RedirectView;
 import com.example.tp2.users.UserService;
 import com.example.tp2.users.Users;
 
-import ch.qos.logback.core.model.Model;
+import org.springframework.ui.Model;
 import jakarta.servlet.http.HttpSession;
 
 
@@ -51,55 +52,55 @@ public class CommandesController {
         com_service.newcommande(nom_commande, user);
 
         System.out.println(" ===========> User email saved in new commande from Controller newcommande "+ user_email);
-       
-        return new RedirectView("/store/connected");
+        return  new RedirectView("/commandes/commandes");
       
     }
 
-    @GetMapping("/connected")
-    public ModelAndView connected(HttpSession session) {
-        ModelAndView modelAndView = new ModelAndView("/store/home");
-        if(session.getAttribute("user_email") !=null){
-            List<Commandes> listCommandes =  com_repo.getAllCommandes(session);
-            modelAndView.addObject("commandes", listCommandes);
+    @GetMapping("/test")
+    public ModelAndView test(){
+        var listAllCommandes = com_service.findAll();
+        var model = Map.of("commandes", listAllCommandes);
 
-        }
-        return modelAndView;
+        System.out.println("Listes de Commandes: " + listAllCommandes);
 
-
+        return new ModelAndView("/store/test", model);
     }
 
+    @GetMapping("/commandes")
+    public ModelAndView commandes(HttpSession session){
 
-           // String emailString = (String) session.getAttribute("user_email");
+        ModelAndView modelAndView = new ModelAndView("/store/connected");
+        System.out.println("===========================> inside Connected ");
+        String user_email = (String) session.getAttribute("user_email");
 
-        // if (emailString == null) {
-        //     // Redirect to home if no user 
-        //     redirectAttributes.addFlashAttribute("error", "Liste non Valide ");
-        //     return new ModelAndView("redirect:/store/home");
-        // }
+        if(user_email != null){
+            Optional<Users> usersOptional = usr_Service.findByEmail(user_email);
+            System.out.println("===========================> email null  /commandes ");
 
-        // Optional<Users> usersOptional = usr_Service.findByEmail(emailString);
+            if(usersOptional.isPresent()){
 
-        // if (usersOptional.isEmpty()) {
-        //     return new ModelAndView("redirect:/store/home");
-        // }
+                Users users = usersOptional.get();
+                List<Commandes> listAllCommandes = com_service.getCommandesByUsers(users);
 
-        // Users users = usersOptional.get();
-        
-        // System.out.println("User details: " + users.getNom() + " " + users.getPrenom());
-        
-        // List<Commandes> listCommandes = com_service.getCommandesByUsers(users);
-
-
-
-        // ModelAndView modelAndViewList = new ModelAndView("store/connected");
-        // modelAndViewList.addObject("commandes", listCommandes);
-
-        // System.out.println("Listes de Commandes: " + listCommandes); 
-
-        // return modelAndViewList;
+                modelAndView.addObject("commandes", listAllCommandes);
+                System.out.println("Listes de Commandes: " + listAllCommandes);
+            }
+        }
+        return modelAndView;
+    }
     
-
+    @GetMapping("/article")
+    public ModelAndView article(@RequestParam Long id) {
+    Optional<Commandes> commandeOptional = com_repo.findById(id);
+    if (commandeOptional.isPresent()) {
+        Commandes commande = commandeOptional.get();
+        ModelAndView modelAndView = new ModelAndView("/store/article");
+        modelAndView.addObject("commandes", commande);
+        return modelAndView;
+    } else {
+        return new ModelAndView("redirect:/store/connected");
+    }
+    }
 
     
 

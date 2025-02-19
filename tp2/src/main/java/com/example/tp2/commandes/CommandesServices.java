@@ -26,10 +26,31 @@ public class CommandesServices implements CommandesInterface{
     }
 
 
+
     public List<Commandes> getCommandesByUsers(Users users){
         return c_repo.findByUsers(users);
 
         // check this
+    }
+
+
+    @Override
+    public Commandes connected() {
+       var usr1 = new Users("Bercy","Stephanie","bercy@gmail.com","1234");
+       var com1 = new Commandes("Boissons",usr1);
+      return c_repo.save(com1);
+
+    }
+
+
+
+    @Override
+    public List<Commandes> findAll() {
+        return c_repo.findAll();
+    }
+
+    public List<Commandes> findByUsers(Users  users){
+        return c_repo.findByUserEmail(users.getEmail());
     }
 
 }

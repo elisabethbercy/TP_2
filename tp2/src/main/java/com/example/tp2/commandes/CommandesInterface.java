@@ -8,10 +8,13 @@ public interface CommandesInterface {
 
     Commandes newcommande(String nom_commande, Users users);
 
-    // List<Commandes> findByUsers(Users users);
+    List<Commandes> findByUsers(Users users);
 
     List<Commandes> getCommandesByUsers(Users users);
 
+
+    public List<Commandes>findAll();
+    Commandes connected();
  
 
     

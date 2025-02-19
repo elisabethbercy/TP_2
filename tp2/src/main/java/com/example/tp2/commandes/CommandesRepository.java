@@ -22,6 +22,6 @@ public interface CommandesRepository extends CrudRepository<Commandes, Long>{
     @Query("SELECT c FROM Commandes c WHERE c.users.email = :email")
     List<Commandes> findByUserEmail(@Param("email") String email);
 
-    List<Commandes> getAllCommandes(HttpSession session);
+
     
 }

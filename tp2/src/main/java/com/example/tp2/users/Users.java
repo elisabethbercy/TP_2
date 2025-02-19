@@ -18,7 +18,7 @@ public class Users {
 	
 	
 	public Users() {
-		
+		this.commandes = new ArrayList<>();
 	}
 	
 	public Users(String nom, String prenom, String email, String motdepasse) {
@@ -28,6 +28,7 @@ public class Users {
 		this.prenom = prenom;
 		this.motdepasse = motdepasse;
 		this.email = email;
+		this.commandes = new ArrayList<>();
 	}
 	
 	
@@ -75,6 +76,7 @@ public class Users {
 	}
 
 	public void addCommande(Commandes commande) {
-        commandes.add(commande);
+		commande.setUsers(this);
+		commandes.add(commande);
     }
 }
