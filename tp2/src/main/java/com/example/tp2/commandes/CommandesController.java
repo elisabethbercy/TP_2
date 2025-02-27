@@ -88,6 +88,8 @@ public class CommandesController {
 
                 modelAndView.addObject("commandes", listAllCommandes);
                 System.out.println("Listes de Commandes: " + listAllCommandes);
+
+
             }
         }
         return modelAndView;
@@ -95,12 +97,15 @@ public class CommandesController {
     
 
     @GetMapping("/articles")
-    public ModelAndView article(@RequestParam Long id) {
+    public ModelAndView article(@RequestParam Long id,
+    HttpSession session) {
     Optional<Commandes> commandeOptional = com_repo.findById(id);
     if (commandeOptional.isPresent()) {
         Commandes commande = commandeOptional.get();
         ModelAndView modelAndView = new ModelAndView("/store/article");
+        modelAndView.addObject("idCommande", id);
         modelAndView.addObject("commandes", commande);
+        session.setAttribute("idCommande", id );
         return modelAndView;
     } else {
         return new ModelAndView("redirect:/store/connected");

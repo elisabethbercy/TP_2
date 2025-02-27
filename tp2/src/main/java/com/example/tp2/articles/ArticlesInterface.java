@@ -10,9 +10,15 @@ public interface ArticlesInterface {
     
     List<Articles> findByCommandes(Commandes commandes);
 
+    List<Articles> findByIdCommande(Commandes commandes);
+
+    List<Articles> getArticlesByIdCommandes(Commandes commandes);
+
     List<Articles> getArticlesByCommandes(Commandes commandes);
 
     public List<Articles>findAll();
+
+   
 
     
     

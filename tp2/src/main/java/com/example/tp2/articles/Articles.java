@@ -14,6 +14,8 @@ public class Articles {
     @Id
     @GeneratedValue
     private long idArticle;
+  
+
     private String nomArticle;
     private String qteArticle;
     private String prixArticle;
@@ -36,15 +38,15 @@ public class Articles {
         this.commandes = commandes;
     }
 
-
-
-    public long getId() {
+    public long getIdArticle() {
         return idArticle;
     }
 
-    public void setId(long idArticle) {
+    public void setIdArticle(long idArticle) {
         this.idArticle = idArticle;
     }
+
+
 
     
     public String getNomArticle() {

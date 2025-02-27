@@ -29,6 +29,7 @@ public class ArticlesServices implements ArticlesInterface {
         return a_repo.findByCommandes(commandes);
     }
 
+
        
     @Override
     public List<Articles> findAll() {
@@ -41,6 +42,21 @@ public class ArticlesServices implements ArticlesInterface {
         return a_repo.findByNomCommande(commandes.getNomCommande());
     }
 
+    @Override
+    public List<Articles> findByIdCommande(Commandes  commande) {
+        return a_repo.findByIdCommande(commande.getId());
+    }
+
+    @Override
+    public List<Articles> getArticlesByIdCommandes(Commandes commandes) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'getArticlesByIdCommandes'");
+    }
+
+    // @Override
+    // public List<Articles> getArticlesByIdCommandes(Commandes commandes) {
+    //     return a_repo.findByIdCommande(commandes);
+    // }
 
 
 

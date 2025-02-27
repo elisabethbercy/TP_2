@@ -17,7 +17,7 @@ public class Commandes {
 
 
     public Commandes(){
-        this.articles = new ArrayList<>();
+        
     }
     
     @Id
@@ -36,11 +36,9 @@ public class Commandes {
     private List<Articles> articles;
 
     public Commandes(String nomCommande, Users users) {
-        super();
-
+       
         this.nomCommande = nomCommande;
         this.users =  users;
-        this.articles = new ArrayList<>();
     }
 
     public List<Articles> getArticles() {

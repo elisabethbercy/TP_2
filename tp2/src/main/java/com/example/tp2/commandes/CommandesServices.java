@@ -1,7 +1,7 @@
 package com.example.tp2.commandes;
 
 import java.util.List;
-
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -32,6 +32,7 @@ public class CommandesServices implements CommandesInterface{
         // check this
     }
 
+    
 
     @Override
     public List<Commandes> findAll() {
@@ -55,5 +56,11 @@ public class CommandesServices implements CommandesInterface{
     @Override
     public List<Commandes> findByNomCommande(String nomCommande) {
         return c_repo.findByNomCommande(nomCommande);
+    }
+
+
+    @Override
+    public Optional<Commandes> findById(Long id) {
+        return c_repo.findById(id);
     }
 }
