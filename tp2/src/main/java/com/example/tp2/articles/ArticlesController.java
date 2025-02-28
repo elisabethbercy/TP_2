@@ -4,11 +4,11 @@ package com.example.tp2.articles;
 import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.Optional;
-import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -26,11 +26,9 @@ import jakarta.servlet.http.HttpSession;
 public class ArticlesController {
 
     @Autowired 
-    private ArticlesInterface art_service;
+    private ArticlesInterface artService;
     @Autowired 
-    private CommandesInterface com_service;
-    @Autowired 
-    private ArticlesRepository art_repo;
+    private CommandesInterface comService;
 
     @PostMapping("/newarticle")
     public RedirectView newarticle(
@@ -60,45 +58,23 @@ public class ArticlesController {
             return new RedirectView("redirect:/commandes/commandes");
         }
 
-        Commandes commandes = com_service.findById(idCommande).orElseThrow(()-> new NoSuchElementException());
+        Commandes commandes = comService.findById(idCommande).orElseThrow(()-> new NoSuchElementException());
         session.setAttribute("idCommande", commandes.getId());
 
-        art_service.newArticle(nomArticle, qteArticle, prixArticle, commandes);
+        artService.newArticle(nomArticle, qteArticle, prixArticle, commandes);
 
         System.out.println(" ===========> User email saved in new article from Controller newarticle "+ user_email);
 
         System.out.println(" ===========> Commande ID saved in new article from Controller newarticle "+ commandes.getId());
 
-       // return new RedirectView("/articles/listarticles?id="+ commandes.getId());
-        return new RedirectView("/articles/article_old?idCommande="+ commandes.getId());
+        return new RedirectView("/articles/article?idCommande="+ commandes.getId());
     }
 
 
-    // @GetMapping("/article")
-    // public ModelAndView article(@RequestParam Long idCommande) {
-    //     System.out.println("check ======> idCommande: " + idCommande);
-    //     ModelAndView articleView = new ModelAndView("/store/article");
-
-    //     Optional<Commandes> commandesOptional = com_service.findById(idCommande);
-    //     if (commandesOptional.isEmpty()) {
-    //         System.out.println("⚠️ Commande not found for id: " + idCommande);
-    //         return new ModelAndView("error"); // Redirect or return an error page
-    //     }
-
-    //     Commandes commandes = commandesOptional.get();
-    //     if (commandes.getArticles() == null) {
-    //         commandes.setArticles(new ArrayList<>()); // Prevent Thymeleaf errors
-    //     }
-
-    //     System.out.println("✅ Found commande: " + commandes); // Debugging
-    //     articleView.addObject("commande", commandes);
-    //     return articleView;
-    // }
-
-    
+   
 
 
-    @GetMapping("/article_old")
+    @GetMapping("/article")
     public ModelAndView article(
         HttpSession session,
         @RequestParam("idCommande") Long id
@@ -109,19 +85,35 @@ public class ArticlesController {
             return new ModelAndView("redirect:/commandes/commandes");
         }
 
-        Optional<Commandes> commandes = com_service.findById(idCommande);
+        Optional<Commandes> commandes = comService.findById(idCommande);
 
         if(commandes.isEmpty()){
             return new ModelAndView("redirect:/commandes/commandes");
         }
 
 
-        List<Articles> listArtByCom = art_service.getArticlesByCommandes(commandes.get());
+        List<Articles> listArtByCom = artService.getArticlesByCommandes(commandes.get());
         Map<String,Object> model = Map.of("articles", listArtByCom);
         // session.setAttribute("articles", );
 
         return new ModelAndView("/store/article",model);
     }
+
+    @GetMapping("/deleteArticle/{idArticle}")
+    public RedirectView deleteArticle(
+        @PathVariable Long idArticle,
+        HttpSession session
+    ){
+        Long idCommande = (Long) session.getAttribute("idCommande");
+        System.out.println("check ======> idCommande: In deleted article " + idCommande);
+
+        artService.deleteArticleByID(idArticle);
+
+        return new RedirectView("/articles/article?idCommande="+ idCommande);
+    }        
+    
+
+
 
     @GetMapping("/listarticlesbycommande")
     public ModelAndView listarticlesbycommande(
@@ -132,9 +124,9 @@ public class ArticlesController {
         System.out.println("check ======> idCommande: In article " + idCommande);
 
 
-        Optional<Commandes> commandes = com_service.findById(idCommande);
+        Optional<Commandes> commandes = comService.findById(idCommande);
 
-        List<Articles> listArtByCom = art_service.getArticlesByCommandes(commandes.get());
+        List<Articles> listArtByCom = artService.getArticlesByCommandes(commandes.get());
         Map<String,Object> model = Map.of("articles", listArtByCom);
 
         return new ModelAndView("/store/article",model);
@@ -144,7 +136,7 @@ public class ArticlesController {
 
     @GetMapping("/listarticles")
     public ModelAndView listarticles(){
-        List<Articles> listAllArticles = art_service.findAll();
+        List<Articles> listAllArticles = artService.findAll();
 
         Map<String,Object> model = Map.of("articles", listAllArticles);
 

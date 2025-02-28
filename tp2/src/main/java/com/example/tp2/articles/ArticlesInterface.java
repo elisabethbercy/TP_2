@@ -18,6 +18,8 @@ public interface ArticlesInterface {
 
     public List<Articles>findAll();
 
+    void deleteArticleByID(Long id);
+
    
 
     

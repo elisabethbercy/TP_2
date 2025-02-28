@@ -11,7 +11,7 @@ import com.example.tp2.commandes.Commandes;
 public class ArticlesServices implements ArticlesInterface {
 
     @Autowired
-    private ArticlesRepository a_repo;
+    private ArticlesRepository aRepo;
 
     @Override
     public Articles newArticle(String nomArticle, String qteArticle, String prixArticle, Commandes commandes) {
@@ -20,13 +20,13 @@ public class ArticlesServices implements ArticlesInterface {
         articles.setQteArticle(qteArticle);
         articles.setPrixArticle(prixArticle);
         articles.setCommandes(commandes);
-        return a_repo.save(articles);
+        return aRepo.save(articles);
     }
 
     @Override
     public List<Articles> getArticlesByCommandes(Commandes commandes) {
     
-        return a_repo.findByCommandes(commandes);
+        return aRepo.findByCommandes(commandes);
     }
 
 
@@ -34,17 +34,17 @@ public class ArticlesServices implements ArticlesInterface {
     @Override
     public List<Articles> findAll() {
 
-        return a_repo.findAll();
+        return aRepo.findAll();
     }
 
     @Override
     public List<Articles> findByCommandes(Commandes commandes) {
-        return a_repo.findByNomCommande(commandes.getNomCommande());
+        return aRepo.findByNomCommande(commandes.getNomCommande());
     }
 
     @Override
     public List<Articles> findByIdCommande(Commandes  commande) {
-        return a_repo.findByIdCommande(commande.getId());
+        return aRepo.findByIdCommande(commande.getId());
     }
 
     @Override
@@ -53,11 +53,12 @@ public class ArticlesServices implements ArticlesInterface {
         throw new UnsupportedOperationException("Unimplemented method 'getArticlesByIdCommandes'");
     }
 
-    // @Override
-    // public List<Articles> getArticlesByIdCommandes(Commandes commandes) {
-    //     return a_repo.findByIdCommande(commandes);
-    // }
+    @Override
+    public void deleteArticleByID(Long id) {
+        aRepo.deleteById(id);
+    }
 
+   
 
 
     
