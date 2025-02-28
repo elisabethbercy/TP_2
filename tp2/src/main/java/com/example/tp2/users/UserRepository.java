@@ -13,7 +13,7 @@ public interface UserRepository extends CrudRepository<Users, String>{
 		Optional<Users> findByEmail(String email);
 		
 		Optional<Users>findByMotdepasse(String motdepasse);
-		//public List<Users> findByUserEmail(@Param("userEmail") String userEmail);
+		
 	
 		
 	}

@@ -12,12 +12,13 @@
         
         <h2>List of Commandes</h2>
        
-         
+        <p th:if="${errorCommandeNull}" class="message" th:text="${errorCommandeNull}"></p>
          <table border="1">
-            <tr><th>Nom Commande</th></tr>
+            <tr><th>Command name</th><th>Action</th></tr>
             <tr th:each="commande : ${commandes}">
-                <td th:text="${commande.nomCommande}"></td>
+                <!-- <td th:text="${commande.nomCommande}"></td> -->
 				<td><a th:href="@{/commandes/articles(id=${commande.id})}" th:text="${commande.nomCommande}"></a></td>
+                <td><a th:href="@{/commandes/printCommande(id=${commande.id})}"> Print</a></td>
 				<td th:text="${commande.id}" style="display: none;"></td>
             </tr>
     
@@ -26,17 +27,17 @@
 
         <hr>
         
-        <h1> Ajout dune commande </h1>
+        <h1> Create new command </h1>
 
         <form action="/commandes/newcommande" method="post">
-            <label for="nomCommande">Titre de la commande:</label>
+            <label for="nomCommande">New command name:</label>
             <input name="nomCommande" required />
-            <input type="submit" value="Ajouter" />
+            <input type="submit" value="Add" />
         </form>
         
         <hr>
 
-        <h1>Deconnexion</h1>
+        <h1>Log out</h1>
         <form action= "/store/logout" method= "post">
             <button type= "submit">Log Out </button> 
         </form>

@@ -26,12 +26,9 @@ public class UserService implements UserInterface {
 	}
 
 
-
-
 	@Override
 	public boolean existById(String email) {
-		// TODO Auto-generated method stub
-		return false;
+		return repo.existsById(email);
 	}
 
 	@Override

@@ -35,15 +35,16 @@ public class UserController {
 	@RequestParam String motdepasse,
 	RedirectAttributes redirectAttributes){
 	if(service.existById(email)) {
-		redirectAttributes.addFlashAttribute("error message","Ce compte existe deja!");
+
+		redirectAttributes.addFlashAttribute("errorMessage","Ce compte existe deja!");
 		System.out.println("----------------------------------------------------------------");
 		System.out.println("==========> Email already exist  " + email);
 		return new RedirectView("/store/home");
 		}
-		redirectAttributes.addFlashAttribute("creation_ok","Compte creer avec succes");
+		service.create(nom, prenom, email, motdepasse);
+		redirectAttributes.addFlashAttribute("creationOk", "Compte creer avec succes");
 		System.out.println("----------------------------------------------------------------");
 		System.out.println("==========> new user created  " + email);
-		service.create(nom, prenom, email,motdepasse);
 		return new RedirectView("/store/home");
 	}
 	
@@ -66,26 +67,35 @@ public class UserController {
 			
 		Optional<Users> usr = service.findByEmail(email);
 
-		if(usr.isPresent() && usr.get().getMotdepasse().equals(motdepasse)) {
-			
-			session.setAttribute("user_email", usr.get().getEmail());
-			session.setAttribute("user_prenom", usr.get().getPrenom());
 
-			model.addAttribute("success","Connection reussie");
-
-			//printing user_name
-			System.out.println("----------------------------------------------------------------");
-			System.out.println("========> email logged in "+usr.get().getEmail());	
-
-			return new ModelAndView("store/connected");
+		if(usr.isEmpty()) {
+			model.addAttribute("error","Email or password incorrect");
+			return new ModelAndView("/store/home");
 		}
 		else {
-			model.addAttribute("error","Email ou mot de passe Incorrect");
-			return new ModelAndView("/store/home");
-		
+
+			if(usr.isPresent() && usr.get().getMotdepasse().equals(motdepasse)) {
+			
+				session.setAttribute("user_email", usr.get().getEmail());
+				session.setAttribute("user_prenom", usr.get().getPrenom());
+	
+				model.addAttribute("success","Loggin successful");
+	
+				//printing user_name
+				System.out.println("----------------------------------------------------------------");
+				System.out.println("========> email logged in "+usr.get().getEmail());	
+	
+				return new ModelAndView("store/connected");
+			}
+			else {
+				model.addAttribute("error","Email or password incorrect");
+				return new ModelAndView("/store/home");
+			
+			}
 		}
-		
-		}
+
+	
+	}
 		
 	
 	@GetMapping("/home")

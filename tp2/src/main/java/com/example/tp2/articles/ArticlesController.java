@@ -112,6 +112,25 @@ public class ArticlesController {
         return new RedirectView("/articles/article?idCommande="+ idCommande);
     }        
     
+    @PostMapping("/backToCommande")
+    public RedirectView backToCommande(
+        HttpSession session
+    ){
+        Long idCommande = (Long) session.getAttribute("idCommande");
+        System.out.println("check ======> idCommande: In back to commande " + idCommande);
+
+        return new RedirectView("/commandes/commandes");
+    }
+
+    @PostMapping("/backToNewArticle")
+    public RedirectView backToNewArticle(
+        HttpSession session
+    ){
+        Long idCommande = (Long) session.getAttribute("idCommande");
+        System.out.println("check ======> idCommande: In back to new article " + idCommande);
+
+        return new RedirectView("/commandes/article");
+    }
 
 
 

@@ -4,22 +4,20 @@
   
     
 
-    <div th:if="${session.user_prenom != null}">
-        <h1> Hello <span th:text="${session.user_prenom}"></span> !</h1>
+    <div th:if="${session.nomCommande != null}">
+        <h1> Add new item to command: <span th:text="${session.nomCommande}"></span> !</h1>
         
 
     </div>
 
-    <hr>
+    <h2>List of items</h2>
 
     <table border="1">
-        <tr><th>Nom Article</th><th>Quantite</th><th>Prix</th><th>Action</th></tr>
+        <tr><th>Item name</th><th>Quantity</th><th>Price</th><th>Action</th></tr>
         <tr th:each="article : ${articles}">
             <td th:text="${article.nomArticle}"></td>
             <td th:text="${article.qteArticle}"></td>
-            <td th:text="${article.prixArticle}"></td>
-            <!-- <td th:text="${article.idArticle}" ></td> -->
-
+            <td th:text="${article.prixArticle} + ' €'"></td>
             <td>
                 <a name="idArticle" th:href="@{/articles/deleteArticle/{idArticle}(idArticle=${article.idArticle})}"
                  onclick="return confirm('Are you sure you want to delete this article?')">❌ Delete</a>
@@ -30,29 +28,30 @@
 
     <hr>
     
-     
 
-    <hr>
 
-    <h1>Ajouter un article a la commande  </h1>
+    <h1>Add new item to command</h1>
 
     <form action="/articles/newarticle" method="post">
         <!-- <input type="hidden" name="id" th:value="${commande.id}" /> -->
-        <label for="article">Article:</label>
+        <label for="article">Item name:</label>
         <input type="text"  name="nomArticle" required />
         
-        <label for="qte">Quantité:</label>
+        <label for="qte">Quantity:</label>
         <input type="number" name="qteArticle" required />
 
-        <label for="prix">Prix:</label>
+        <label for="prix">Price:</label>
         <input type="number" name="prixArticle" step="0.01" required />
 
-        <button type="submit">Ajouter</button>
+        <button type="submit">Add</button>
     </form>
 
-    <h1>Deconnexion</h1>
+    <h1>Navigation</h1>
 		<form action= "/store/logout" method= "post">
 		    <button type= "submit">Log Out </button> 
+		</form>
+        <form action= "/articles/backToCommande" method= "post">
+		    <button type= "submit">Back to commands</button> 
 		</form>
 
 

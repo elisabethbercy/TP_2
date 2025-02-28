@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Print Commande</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        .container {
+            width: 80%;
+            margin: 0 auto;
+        }
+        .header, .footer {
+            text-align: center;
+            margin: 20px 0;
+        }
+        .commande-details {
+            margin: 20px 0;
+        }
+        .commande-details table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        .commande-details th, .commande-details td {
+            border: 1px solid #ddd;
+            padding: 8px;
+        }
+        .commande-details th {
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div th:if="${session.nomCommande != null}" class="header">
+            <h1>Command <span th:text="${session.nomCommande}"></span> Details</h1>
+        </div>
+        <div class="commande-details">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Product</th>
+                        <th>Quantity</th>
+                        <th>Price</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="article : ${articles}">
+                        <td th:text="${article.nomArticle}"></td>
+                        <td th:text="${article.qteArticle}"></td>
+                        <td th:text="${article.prixArticle}"></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <form action="/articles/backToCommande" method="post">
+            <button type="submit">Back to commands</button> 
+        </form>
+        <form action="/articles/backToNewArticle" method="post">
+            <button type="submit">Add new item to command</button> 
+        </form>
+    </div>
+</body>
+</html>
