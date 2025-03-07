@@ -62,53 +62,47 @@ public class CommandesController {
         return  new RedirectView("/commandes/commandes");
       
     }
+   
 
-    @GetMapping("/test")
-    public ModelAndView test(
-        HttpSession session
-    ){
-        var listAllCommandes = comService.findAll();
-        var model = Map.of("commandes", listAllCommandes);
-
-        System.out.println("Listes de Commandes: " + listAllCommandes);
-
-        return new ModelAndView("/store/test", model);
-    }
-
-    // !!! to do : list display before newcommande added
+    // !!! to do : list display before newcommande added ok!!!
 
     @GetMapping("/commandes")
-    public ModelAndView commandes(HttpSession session){
+    public ModelAndView commandes(HttpSession session) {
+    ModelAndView modelAndView = new ModelAndView("/store/connected");
+    System.out.println("===========================> inside Connected ");
 
-        ModelAndView modelAndView = new ModelAndView("/store/connected");
-        System.out.println("===========================> inside Connected ");
-        String user_email = (String) session.getAttribute("user_email");
+    String user_email = (String) session.getAttribute("user_email");
 
-        if(user_email != null){
-            Optional<Users> usersOptional = usrService.findByEmail(user_email);
-            System.out.println("===========================> email not null  /commandes ");
+    if (user_email != null) {
+        Optional<Users> usersOptional = usrService.findByEmail(user_email);
+        System.out.println("===========================> email not null  /commandes ");
 
-            if(usersOptional.isPresent()){
+        if (usersOptional.isPresent()) {
+            Users users = usersOptional.get();
+            List<Commandes> listAllCommandes = comService.getCommandesByUsers(users);
 
-                Users users = usersOptional.get();
-                List<Commandes> listAllCommandes = comService.getCommandesByUsers(users);
+            if (!listAllCommandes.isEmpty()) {
+                // Only access index 0 if the list is not empty
                 session.setAttribute("nomCommande", listAllCommandes.get(0).getNomCommande());
-
-                if (!listAllCommandes.isEmpty()) {
-                    // Only set the attribute if the list is not empty
-                    session.setAttribute("nomCommande", listAllCommandes.get(0).getNomCommande());
-                    modelAndView.addObject("commandes", listAllCommandes);
-                    System.out.println("Listes de Commandes: " + listAllCommandes);
-                } else {
-                    // Handle the case where no commandes are found
-                    modelAndView.addObject("message", "No commandes found for the user.");
-                }
+                modelAndView.addObject("commandes", listAllCommandes);
+                System.out.println("Listes de Commandes: " + listAllCommandes);
+            } else {
+                // Handle the case where no commandes are found
+                modelAndView.addObject("message", "No commandes found for the user.");
+                System.out.println("No commandes found.");
             }
+        } else {
+            modelAndView.addObject("message", "User not found.");
+            System.out.println("User not found.");
         }
-        return modelAndView;
-       // model.addAttribute("error","Email or password incorrect");
-		//return new ModelAndView("/store/home");
+    } else {
+        modelAndView.addObject("message", "No user email found in session.");
+        System.out.println("No user email found in session.");
     }
+
+    return modelAndView;
+}
+
     
 
     @GetMapping("/articles")
@@ -169,6 +163,18 @@ public class CommandesController {
         List<Articles> listArtByCom = artService.getArticlesByCommandes(commandes.get());
         Map<String, Object> model = Map.of("articles", listArtByCom);
         return new ModelAndView("/store/printCommande", model);
+    }
+
+    @GetMapping("/test")
+    public ModelAndView test(
+        HttpSession session
+    ){
+        var listAllCommandes = comService.findAll();
+        var model = Map.of("commandes", listAllCommandes);
+
+        System.out.println("Listes de Commandes: " + listAllCommandes);
+
+        return new ModelAndView("/store/test", model);
     }
 
     

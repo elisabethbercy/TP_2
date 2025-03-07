@@ -87,9 +87,9 @@ public class UserController {
 				System.out.println("----------------------------------------------------------------");
 				System.out.println("========> email logged in "+usr.get().getEmail());	
 	
-				return new ModelAndView("store/connected");
+				//return new ModelAndView("store/connected");
 				//changement *******
-				//return new ModelAndView("redirect:/commandes/commandes");
+				return new ModelAndView("redirect:/commandes/commandes");
 			}
 			else {
 				model.addAttribute("error","Email or password incorrect");
