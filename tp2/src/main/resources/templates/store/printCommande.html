@@ -47,6 +47,7 @@
                         <th>Product</th>
                         <th>Quantity</th>
                         <th>Price</th>
+                        <th>Total</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -54,8 +55,16 @@
                         <td th:text="${article.nomArticle}"></td>
                         <td th:text="${article.qteArticle}"></td>
                         <td th:text="${article.prixArticle}"></td>
+                        <td th:text="${article.prixArticle * article.qteArticle} + ' € '"></td>
                     </tr>
                 </tbody>
+                <tfoot>
+                    <tr>
+                        <td colspan="3"><strong>Total:</strong></td>
+                        <td th:text="${#aggregates.sum(articles.![prixArticle * qteArticle])} + ' €'"></td>
+                    </tr>
+                    </tr>
+                </tfoot>
             </table>
         </div>
         <form action="/articles/backToCommande" method="post">

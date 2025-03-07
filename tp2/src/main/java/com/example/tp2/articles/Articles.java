@@ -17,8 +17,8 @@ public class Articles {
   
 
     private String nomArticle;
-    private String qteArticle;
-    private String prixArticle;
+    private int qteArticle;
+    private int prixArticle;
 
     
 
@@ -31,7 +31,7 @@ public class Articles {
 
     }
 
-    public Articles(String nomArticle, String qteArticle, String prixArticle, Commandes commandes) {
+    public Articles(String nomArticle, int qteArticle, int prixArticle, Commandes commandes) {
         this.nomArticle = nomArticle;
         this.qteArticle = qteArticle;
         this.prixArticle = prixArticle;
@@ -57,19 +57,19 @@ public class Articles {
         this.nomArticle = nomArticle;
     }
 
-    public String getQteArticle() {
+    public int getQteArticle() {
         return qteArticle;
     }
 
-    public void setQteArticle(String qteArticle) {
+    public void setQteArticle(int qteArticle) {
         this.qteArticle = qteArticle;
     }
 
-    public String getPrixArticle() {
+    public int getPrixArticle() {
         return prixArticle;
     }
 
-    public void setPrixArticle(String prixArticle) {
+    public void setPrixArticle(int prixArticle) {
         this.prixArticle = prixArticle;
     }
   

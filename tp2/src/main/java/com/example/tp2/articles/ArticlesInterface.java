@@ -6,7 +6,7 @@ import com.example.tp2.commandes.Commandes;
 
 public interface ArticlesInterface {
 
-    Articles newArticle(String nomArticle, String qteArticle, String prixArticle,  Commandes commandes);
+    Articles newArticle(String nomArticle, int qteArticle, int prixArticle,  Commandes commandes);
     
     List<Articles> findByCommandes(Commandes commandes);
 

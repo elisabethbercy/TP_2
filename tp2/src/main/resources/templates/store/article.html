@@ -41,7 +41,9 @@
         <input type="number" name="qteArticle" required />
 
         <label for="prix">Price:</label>
-        <input type="number" name="prixArticle" step="0.01" required />
+        <input type="number" name="prixArticle" min="1" step="0.01" required />
+
+        
 
         <button type="submit">Add</button>
     </form>

@@ -33,8 +33,11 @@ public class UserController {
 	@RequestParam String prenom,
 	@RequestParam String email,
 	@RequestParam String motdepasse,
-	RedirectAttributes redirectAttributes){
+	RedirectAttributes redirectAttributes,
+	HttpSession session){
 	if(service.existById(email)) {
+
+		if
 
 		redirectAttributes.addFlashAttribute("errorMessage","Ce compte existe deja!");
 		System.out.println("----------------------------------------------------------------");
@@ -86,6 +89,8 @@ public class UserController {
 				System.out.println("========> email logged in "+usr.get().getEmail());	
 	
 				return new ModelAndView("store/connected");
+				//changement *******
+				//return new ModelAndView("redirect:/commandes/commandes");
 			}
 			else {
 				model.addAttribute("error","Email or password incorrect");

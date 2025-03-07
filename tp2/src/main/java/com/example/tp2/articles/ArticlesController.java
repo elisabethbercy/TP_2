@@ -34,8 +34,8 @@ public class ArticlesController {
     public RedirectView newarticle(
         // @RequestParam Long id,
         @RequestParam String nomArticle,
-        @RequestParam String qteArticle,
-        @RequestParam String prixArticle,
+        @RequestParam int qteArticle,
+        @RequestParam int prixArticle,
         HttpSession session
     ){
         String user_email = (String) session.getAttribute("user_email");

@@ -14,7 +14,7 @@ public class ArticlesServices implements ArticlesInterface {
     private ArticlesRepository aRepo;
 
     @Override
-    public Articles newArticle(String nomArticle, String qteArticle, String prixArticle, Commandes commandes) {
+    public Articles newArticle(String nomArticle, int qteArticle, int prixArticle, Commandes commandes) {
        Articles articles = new Articles();
         articles.setNomArticle(nomArticle);
         articles.setQteArticle(qteArticle);

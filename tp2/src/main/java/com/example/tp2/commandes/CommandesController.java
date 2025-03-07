@@ -89,10 +89,15 @@ public class CommandesController {
                 List<Commandes> listAllCommandes = comService.getCommandesByUsers(users);
                 session.setAttribute("nomCommande", listAllCommandes.get(0).getNomCommande());
 
-                modelAndView.addObject("commandes", listAllCommandes);
-                System.out.println("Listes de Commandes: " + listAllCommandes);
-
-
+                if (!listAllCommandes.isEmpty()) {
+                    // Only set the attribute if the list is not empty
+                    session.setAttribute("nomCommande", listAllCommandes.get(0).getNomCommande());
+                    modelAndView.addObject("commandes", listAllCommandes);
+                    System.out.println("Listes de Commandes: " + listAllCommandes);
+                } else {
+                    // Handle the case where no commandes are found
+                    modelAndView.addObject("message", "No commandes found for the user.");
+                }
             }
         }
         return modelAndView;
