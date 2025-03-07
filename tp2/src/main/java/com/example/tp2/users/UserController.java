@@ -37,8 +37,6 @@ public class UserController {
 	HttpSession session){
 	if(service.existById(email)) {
 
-		if
-
 		redirectAttributes.addFlashAttribute("errorMessage","Ce compte existe deja!");
 		System.out.println("----------------------------------------------------------------");
 		System.out.println("==========> Email already exist  " + email);
@@ -48,6 +46,7 @@ public class UserController {
 		redirectAttributes.addFlashAttribute("creationOk", "Compte creer avec succes");
 		System.out.println("----------------------------------------------------------------");
 		System.out.println("==========> new user created  " + email);
+		
 		return new RedirectView("/store/home");
 	}
 	

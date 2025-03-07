@@ -43,6 +43,7 @@ public class CommandesController {
         RedirectAttributes redirectAttributes
         ){
         String user_email = (String) session.getAttribute("user_email");
+        
 
         System.out.println(user_email+"  check if user_email is in session");
 
@@ -53,6 +54,8 @@ public class CommandesController {
         }
 
         Users user = usrService.findByEmail(user_email).orElse(null); // if error here
+
+        
         comService.newCommande(nomCommande, user);
 
         System.out.println(" ===========> User email saved in new commande from Controller newcommande "+ user_email);
@@ -61,7 +64,9 @@ public class CommandesController {
     }
 
     @GetMapping("/test")
-    public ModelAndView test(){
+    public ModelAndView test(
+        HttpSession session
+    ){
         var listAllCommandes = comService.findAll();
         var model = Map.of("commandes", listAllCommandes);
 
@@ -101,25 +106,38 @@ public class CommandesController {
             }
         }
         return modelAndView;
+       // model.addAttribute("error","Email or password incorrect");
+		//return new ModelAndView("/store/home");
     }
     
 
     @GetMapping("/articles")
     public ModelAndView article(@RequestParam Long id,
-    HttpSession session) {
-    Optional<Commandes> commandeOptional = com_repo.findById(id);
-    if (commandeOptional.isPresent()) {
-        Commandes commande = commandeOptional.get();
+    HttpSession session,
+    RedirectAttributes redirectAttributes) {
+        Optional<Commandes> commandeOptional = com_repo.findById(id);
 
-        ModelAndView modelAndView = new ModelAndView("/store/article");
-        modelAndView.addObject("idCommande", id);
-        modelAndView.addObject("commandes", commande);
+        String user_email = (String) session.getAttribute("user_email");
 
-        session.setAttribute("idCommande", id );
-        return modelAndView;
-    } else {
-        return new ModelAndView("redirect:/store/connected");
-    }
+        if(user_email == null)
+        {
+            
+            redirectAttributes.addFlashAttribute("error", "Session Invalide. Veuillez vous reconnecter.");
+            return new ModelAndView("/store/home");
+        }
+
+        if (commandeOptional.isPresent()) {
+            Commandes commande = commandeOptional.get();
+
+            ModelAndView modelAndView = new ModelAndView("/store/article");
+            modelAndView.addObject("idCommande", id);
+            modelAndView.addObject("commandes", commande);
+
+            session.setAttribute("idCommande", id );
+            return modelAndView;
+        } else {
+            return new ModelAndView("redirect:/store/connected");
+        }
     }
 
     @GetMapping("/printCommande")
@@ -127,6 +145,15 @@ public class CommandesController {
         HttpSession session,
         RedirectAttributes redirectAttributes) {
         Long idCommande = (Long) session.getAttribute("idCommande");
+
+        String user_email = (String) session.getAttribute("user_email");
+
+        if(user_email == null)
+        {
+            
+            redirectAttributes.addFlashAttribute("error", "Session Invalide. Veuillez vous reconnecter.");
+            return new ModelAndView("/store/home");
+        }
 
         if (idCommande == null) {
             redirectAttributes.addFlashAttribute("errorCommandeNull","No item yet to display!!!");
