@@ -7,31 +7,57 @@
     <style>
         body {
             font-family: Arial, sans-serif;
+            background-color: #f9f9f9;
         }
         .container {
             width: 80%;
-            margin: 0 auto;
-        }
-        .header, .footer {
+            margin: 40px auto;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
             text-align: center;
-            margin: 20px 0;
-        }
-        .commande-details {
-            margin: 20px 0;
         }
         .commande-details table {
             width: 100%;
             border-collapse: collapse;
+            margin-top: 20px;
         }
         .commande-details th, .commande-details td {
             border: 1px solid #ddd;
-            padding: 8px;
+            padding: 10px;
+            text-align: center;
         }
         .commande-details th {
             background-color: #f2f2f2;
         }
-        .print{
-            display: inline;
+        .button-container {
+            margin-top: 20px;
+            text-align: center;
+        }
+        .button-container form {
+            display: inline-block;
+            margin-right: 10px;
+        }
+        button {
+            background-color: whitesmoke;
+            color: black;
+            padding: 10px 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background 0.3s ease-in-out;
+        }
+        button:hover {
+            background-color: #0056b3;
+            color: white;
+        }
+        .print {
+            background-color: #28a745;
+        }
+        .print:hover {
+            background-color: #218838;
         }
     </style>
 </head>
@@ -63,17 +89,19 @@
                         <td colspan="3"><strong>Total:</strong></td>
                         <td th:text="${#aggregates.sum(articles.![prixArticle * qteArticle])} + ' €'"></td>
                     </tr>
-                    </tr>
                 </tfoot>
             </table>
         </div>
-        <form action="/articles/backToCommande" method="post">
-            <button type="submit">Back to commands</button> 
-        </form>
-        <form action="/articles/backToNewArticle" method="post">
-            <button type="submit">Add new item to command</button> 
-        </form>
-        <button class"print" onclick ="window.print()">Print</button>
+        
+        <div class="button-container">
+            <form action="/articles/backToCommande" method="post">
+                <button type="submit">Back to Commands</button> 
+            </form>
+            <form action="/articles/backToNewArticle" method="post">
+                <button type="submit">Add New Item</button> 
+            </form>
+            <button class="print" onclick="window.print()">Print</button>
+        </div>
     </div>
 </body>
 </html>
