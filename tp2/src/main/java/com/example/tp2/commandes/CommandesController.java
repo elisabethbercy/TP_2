@@ -109,7 +109,7 @@ public class CommandesController {
     public ModelAndView article(@RequestParam Long id,
     HttpSession session,
     RedirectAttributes redirectAttributes) {
-        Optional<Commandes> commandeOptional = com_repo.findById(id);
+        Optional<Commandes> commandeOptional = comService.findById(id);
 
         String user_email = (String) session.getAttribute("user_email");
 
@@ -121,14 +121,14 @@ public class CommandesController {
         }
 
         if (commandeOptional.isPresent()) {
-            Commandes commande = commandeOptional.get();
-
-            ModelAndView modelAndView = new ModelAndView("/store/article");
-            modelAndView.addObject("idCommande", id);
-            modelAndView.addObject("commandes", commande);
+            
+            List<Articles> listArtByCom = artService.getArticlesByCommandes(commandeOptional.get());
+            Map<String,Object> model = Map.of("articles", listArtByCom);
 
             session.setAttribute("idCommande", id );
-            return modelAndView;
+
+            return new ModelAndView("/store/article",model);
+
         } else {
             return new ModelAndView("redirect:/store/connected");
         }

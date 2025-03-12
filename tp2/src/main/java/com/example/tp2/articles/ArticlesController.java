@@ -129,7 +129,7 @@ public class ArticlesController {
         Long idCommande = (Long) session.getAttribute("idCommande");
         System.out.println("check ======> idCommande: In back to new article " + idCommande);
 
-        return new RedirectView("/commandes/articles?id=" + idCommande);
+        return new RedirectView("/articles/article?idCommande=" + idCommande);
     }
 
 
