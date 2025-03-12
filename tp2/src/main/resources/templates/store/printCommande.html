@@ -95,11 +95,17 @@
         
         <div class="button-container">
             <form action="/articles/backToCommande" method="post">
-                <button type="submit">Back to Commands</button> 
+                <button type="submit">Back to Command Lists</button> 
             </form>
             <form action="/articles/backToNewArticle" method="post">
                 <button type="submit">Add New Item</button> 
             </form>
+            
+            <form id="logoutForm" action="/store/logout" method="post">
+                <button type="submit" form="logoutForm">Log Out</button>
+            </form>
+
+
             <button class="print" onclick="window.print()">Print</button>
         </div>
     </div>
